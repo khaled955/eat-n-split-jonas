@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { initialFriends } from "../data/friend-list.data";
+import { FriendType } from "./types/friend.type";
+import FormAddFriend from "./components/form-add-friend";
+import Button from "./components/button";
+import FormSplitBill from "./components/form-split-bill";
+import FriendsList from "./components/friends-list";
+const demoFriend = {
+  id: 118836,
+  name: "Clark",
+  image: "https://i.pravatar.cc/48?u=118836",
+  balance: -7,
+};
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  // States
+  const [showAddFriend, setshowAddFriend] = useState(false);
+  const [friends, setFriends] = useState(initialFriends);
+  // Handlers
+  function handleToggleAddForm() {
+    setshowAddFriend((current) => !current);
+  }
+
+  function handleAddNewFriend(newFriend: FriendType) {
+    setFriends((friends) => [...friends, newFriend]);
+    handleToggleAddForm();
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <div className="sidebar">
+        <FriendsList friends={friends} />
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddNewFriend} />}
+        <Button onClick={handleToggleAddForm} type="button">
+          {showAddFriend ? "Close" : "Add friend"}
+        </Button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
 
-export default App
+      <FormSplitBill friend={demoFriend} />
+    </div>
+  );
+}
