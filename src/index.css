@@ -168,3 +168,106 @@ form h2 {
   letter-spacing: -0.5px;
   margin-bottom: 1.6rem;
 }
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 850px) {
+  body {
+    align-items: flex-start;
+    padding: 3rem 2rem;
+  }
+
+  .app {
+    width: 100%;
+    min-height: auto;
+
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .form-split-bill {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 56.25%;
+  }
+
+  body {
+    padding: 2rem 1.2rem;
+  }
+
+  .app {
+    gap: 2rem;
+  }
+
+  .sidebar li {
+    grid-template-columns: 4.5rem 1fr auto;
+    column-gap: 1rem;
+    padding: 1rem;
+  }
+
+  .form-add-friend {
+    grid-template-columns: 1fr;
+  }
+
+  .form-split-bill {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+
+  form .button {
+    grid-column: 1;
+  }
+
+  form h2 {
+    grid-column: 1;
+    font-size: 2rem;
+  }
+
+  input,
+  select {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    padding: 1rem;
+  }
+
+  .sidebar li {
+    grid-template-columns: 4rem 1fr;
+  }
+
+  .sidebar li .button {
+    grid-column: 1 / -1;
+    grid-row: auto;
+
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .sidebar li img {
+    grid-row: span 2;
+  }
+
+  .sidebar > .button {
+    float: none;
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .form-split-bill,
+  .form-add-friend {
+    padding: 1.5rem;
+  }
+}
