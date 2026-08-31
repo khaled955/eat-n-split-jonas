@@ -5,17 +5,13 @@ import FormAddFriend from "./components/form-add-friend";
 import Button from "./components/button";
 import FormSplitBill from "./components/form-split-bill";
 import FriendsList from "./components/friends-list";
-const demoFriend = {
-  id: 118836,
-  name: "Clark",
-  image: "https://i.pravatar.cc/48?u=118836",
-  balance: -7,
-};
 
 export default function App() {
   // States
   const [showAddFriend, setshowAddFriend] = useState(false);
   const [friends, setFriends] = useState(initialFriends);
+  const [selectedFriend, setSelectedFriend] = useState<FriendType | null>(null);
+
   // Handlers
   function handleToggleAddForm() {
     setshowAddFriend((current) => !current);
@@ -26,17 +22,36 @@ export default function App() {
     handleToggleAddForm();
   }
 
+  function handleSelectAndToggleFriend(friend: FriendType) {
+    setSelectedFriend((current) => (current?.id === friend.id ? null : friend));
+    setshowAddFriend(false);
+  }
+  function handleSpliteBill(value:number){
+  setFriends(friends=> friends.map(friend=> friend.id === selectedFriend?.id ? {...friend,balance:friend.balance + value }:friend))
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList friends={friends} />
+        <FriendsList
+          friends={friends}
+          onSelect={handleSelectAndToggleFriend}
+          selectedFriend={selectedFriend}
+        />
         {showAddFriend && <FormAddFriend onAddFriend={handleAddNewFriend} />}
+
         <Button onClick={handleToggleAddForm} type="button">
           {showAddFriend ? "Close" : "Add friend"}
         </Button>
       </div>
 
-      <FormSplitBill friend={demoFriend} />
+      {selectedFriend && (
+        <FormSplitBill
+          selectedFriend={selectedFriend}
+          key={selectedFriend.id}
+          onSpliteBill={handleSpliteBill}
+        />
+      )}
     </div>
   );
 }

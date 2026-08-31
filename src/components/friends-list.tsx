@@ -3,12 +3,14 @@ import Friend from "./friend";
 
 type FriendsListProps = {
   friends: FriendType[];
+  onSelect:(friend:FriendType)=>void;
+  selectedFriend:FriendType | null;
 };
-export default function FriendsList({ friends }: FriendsListProps) {
+export default function FriendsList({ friends,onSelect,selectedFriend }: FriendsListProps) {
   return (
     <ul>
       {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
+        <Friend friend={friend} key={friend.id}  onSelect={onSelect} selectedFriend={selectedFriend}/>
       ))}
     </ul>
   );

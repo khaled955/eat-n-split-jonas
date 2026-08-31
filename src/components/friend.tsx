@@ -3,13 +3,20 @@ import Button from "./button";
 
 type FriendProps = {
   friend: FriendType;
+  onSelect: (friend: FriendType) => void;
+  selectedFriend: FriendType | null;
 };
 
 export default function Friend({
-  friend: { balance, image, name },
+  friend,
+  onSelect,
+  selectedFriend,
 }: FriendProps) {
+  // Variables
+  const { balance, image, name, id } = friend;
+  const isSelected = selectedFriend?.id === id;
   return (
-    <li>
+    <li className={isSelected ? "selected" : ""}>
       <img src={image} alt={name} />
       <h3>{name}</h3>
       {balance < 0 && (
@@ -24,7 +31,9 @@ export default function Friend({
       )}
       {balance === 0 && <p>You and {name} are even</p>}
 
-      <Button type="submit">Select</Button>
+      <Button onClick={() => onSelect(friend)} type="submit">
+        {isSelected ? "Close" : "Select"}
+      </Button>
     </li>
   );
 }
