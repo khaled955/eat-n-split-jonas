@@ -26,8 +26,15 @@ export default function App() {
     setSelectedFriend((current) => (current?.id === friend.id ? null : friend));
     setshowAddFriend(false);
   }
-  function handleSpliteBill(value:number){
-  setFriends(friends=> friends.map(friend=> friend.id === selectedFriend?.id ? {...friend,balance:friend.balance + value }:friend))
+  function handleSpliteBill(value: number) {
+    setFriends((friends) =>
+      friends.map((friend) =>
+        friend.id === selectedFriend?.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend,
+      ),
+    );
+    setSelectedFriend(null);
   }
 
   return (
